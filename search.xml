@@ -3,14 +3,14 @@
   <entry>
     <title>es6系列-介绍</title>
     <url>/2019/10/30/es6-introduced/</url>
-    <content><![CDATA[<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><ul>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
 <li>ES6， 全称 ECMAScript 6.0 ，是 JavaScript 的下一个版本标准，2015.06 发版。ES6 主要是为了解决 ES5 的先天不足，比如 JavaScript 里并没有类的概念，但是目前浏览器的 JavaScript 是 ES5 版本，大多数高版本的浏览器也支持 ES6，不过只实现了 ES6 的部分特性和功能</li>
 </ul>
-<h4 id="ECMAScript-的背景"><a href="#ECMAScript-的背景" class="headerlink" title="ECMAScript 的背景"></a>ECMAScript 的背景</h4><ul>
+<h2 id="ECMAScript-的背景"><a href="#ECMAScript-的背景" class="headerlink" title="ECMAScript 的背景"></a>ECMAScript 的背景</h2><ul>
 <li>JavaScript 是大家所了解的语言名称，但是这个语言名称是商标（ Oracle 公司注册的商标）。因此，JavaScript 的正式名称是 ECMAScript 。1996年11月，JavaScript 的创造者网景公司将 JS 提交给国际化标准组织 ECMA（European computer manufactures association，欧洲计算机制造联合会），希望这种语言能够成为国际标准，随后 ECMA 发布了规定浏览器脚本语言的标准，即 ECMAScript。这也有利于这门语言的开放和中立。</li>
 </ul>
 <a id="more"></a>
-<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
 <p>这个系列打算总结下es6的知识,总结目录如下</p>
 </blockquote>
 <ul>
@@ -222,6 +222,29 @@
 </ul>
 </li>
 </ul>
+<h2 id="声明与表达式"><a href="#声明与表达式" class="headerlink" title="声明与表达式"></a>声明与表达式</h2><h3 id="let与const"><a href="#let与const" class="headerlink" title="let与const"></a>let与const</h3><h4 id="let命令"><a href="#let命令" class="headerlink" title="let命令"></a>let命令</h4><h5 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  let a = 0;</span><br><span class="line">  a   // 0</span><br><span class="line">&#125;</span><br><span class="line">a   // 报错 ReferenceError: a is not defined</span><br></pre></td></tr></table></figure>
+<h5 id="代码块内有效"><a href="#代码块内有效" class="headerlink" title="代码块内有效"></a>代码块内有效</h5><blockquote>
+<p>let 是在代码块内有效，var 是在全局范围内有效:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  let a = 0;</span><br><span class="line">  var b = 1;</span><br><span class="line">&#125;</span><br><span class="line">a  // ReferenceError: a is not defined</span><br><span class="line">b  // 1</span><br></pre></td></tr></table></figure>
+<h5 id="不能重复声明"><a href="#不能重复声明" class="headerlink" title="不能重复声明"></a>不能重复声明</h5><blockquote>
+<p>let 只能声明一次 var 可以声明多次:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">let a = 1;</span><br><span class="line">let a = 2;</span><br><span class="line">var b = 3;</span><br><span class="line">var b = 4;</span><br><span class="line">a  // Identifier &apos;a&apos; has already been declared</span><br><span class="line">b  // 4</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>for 循环计数器很适合用 let</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">for (var i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">  setTimeout(function()&#123;</span><br><span class="line">    console.log(i);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">// 输出十个 10</span><br><span class="line">for (let j = 0; j &lt; 10; j++) &#123;</span><br><span class="line">  setTimeout(function()&#123;</span><br><span class="line">    console.log(j);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">// 输出 0123456789</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>变量 i 是用 var 声明的，在全局范围内有效，所以全局中只有一个变量 i, 每次循环时，setTimeout 定时器里面的 i 指的是全局变量 i ，而循环里的十个 setTimeout 是在循环结束后才执行，所以此时的 i 都是 10。变量 j 是用 let 声明的，当前的 i 只在本轮循环中有效，每次循环的 j 其实都是一个新的变量，所以 setTimeout 定时器里面的 j 其实是不同的变量，即最后输出12345。（若每次循环的变量 j 都是重新声明的，如何知道前一个循环的值？这是因为 JavaScript 引擎内部会记住前一个循环的值）。</p>
+</blockquote>
+<h5 id="不存在变量提升"><a href="#不存在变量提升" class="headerlink" title="不存在变量提升"></a>不存在变量提升</h5><blockquote>
+<p>let 不存在变量提升，var 会变量提升:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">console.log(a);  //ReferenceError: a is not defined</span><br><span class="line">let a = &quot;apple&quot;;</span><br><span class="line"> </span><br><span class="line">console.log(b);  //undefined</span><br><span class="line">var b = &quot;banana&quot;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>变量 b 用 var 声明存在变量提升，所以当脚本开始运行的时候，b 已经存在了，但是还没有赋值，所以会输出 undefined。变量 a 用 let 声明不存在变量提升，在声明变量 a 之前，a 不存在，所以会报错。</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>es6</category>
