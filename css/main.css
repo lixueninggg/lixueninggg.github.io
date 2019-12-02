@@ -1084,7 +1084,7 @@ pre .javascript .function {
   }
 }
 .back-to-top.back-to-top-on {
-  bottom: 19px;
+  bottom: 21px;
 }
 .header {
   background: transparent;
@@ -1700,7 +1700,7 @@ pre .javascript .function {
 .sidebar-toggle {
   position: fixed;
   right: 30px;
-  bottom: 45px;
+  bottom: 75px;
   width: 14px;
   height: 14px;
   padding: 5px;
@@ -1822,7 +1822,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #95ff37;
+  background: #7d9eff;
 }
 .links-of-blogroll {
   font-size: 13px;

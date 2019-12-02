@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>LeetCode-每日一题</title>
+    <url>/2019/12/02/leetcode-everyday/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>开这篇每日一题的博客,题目是从LeetCode上面找的,解题思路我会一步一步的去剖析,希望可以从这个习惯开始使自己的功力更上一层</li>
+</ul>
+<a id="more"></a>
+<h2 id="两数之和"><a href="#两数之和" class="headerlink" title="两数之和"></a>两数之和</h2><blockquote>
+<p>题目:给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。<br>示例:<br>给定 nums = [2, 7, 11, 15], target = 9<br>因为 nums[0] + nums[1] = 2 + 7 = 9<br>所以返回 [0, 1]</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;number[]&#125; nums</span></span><br><span class="line"><span class="comment"> * @param &#123;number&#125; target</span></span><br><span class="line"><span class="comment"> * @return &#123;number[]&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">let</span> twoSum = <span class="function"><span class="keyword">function</span>(<span class="params">nums, target</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> a = []</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>, len = nums.length; i &lt; len; i++) &#123;</span><br><span class="line">        <span class="keyword">let</span> tmp = target - nums[i]</span><br><span class="line">        <span class="comment">// 如果a下标存在tmp值得下标则返回已经记录的下标值和当前下标值</span></span><br><span class="line">        <span class="keyword">if</span> (a[tmp] !== <span class="literal">undefined</span>)  <span class="keyword">return</span> [a[tmp], i]</span><br><span class="line">        <span class="comment">// 如果a[tmp] == undefined 则a存入对应数值tmp的下标,值为当前循环的下标</span></span><br><span class="line">        a[nums[i]] = i</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> res = twoSum([<span class="number">2</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">15</span>], <span class="number">9</span>)</span><br><span class="line"><span class="built_in">console</span>.log(res) <span class="comment">// [0, 1]</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>js</category>
+        <category>算法题</category>
+      </categories>
+  </entry>
+  <entry>
     <title>es6系列-介绍</title>
     <url>/2019/10/30/es6-introduced/</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
