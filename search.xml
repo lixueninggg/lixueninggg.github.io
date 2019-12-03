@@ -1,91 +1,624 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-  
-    
-    <entry>
-      <title>LeetCode-每日一题</title>
-      <link href="/2019/12/02/leetcode-everyday/"/>
-      <url>/2019/12/02/leetcode-everyday/</url>
-      
-        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul><li>开这篇每日一题的博客,题目是从LeetCode上面找的,解题思路我会一步一步的去剖析,希望可以从这个习惯开始使自己的功力更上一层</li></ul><a id="more"></a><h2 id="两数之和"><a href="#两数之和" class="headerlink" title="两数之和"></a>两数之和</h2><blockquote><p>2019年12月2日<br><br>题目:<br>给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。<br><br>示例:<br>给定 nums = [2, 7, 11, 15], target = 9<br>因为 nums[0] + nums[1] = 2 + 7 = 9<br>所以返回 [0, 1]</p></blockquote><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;number[]&#125; nums</span></span><br><span class="line"><span class="comment"> * @param &#123;number&#125; target</span></span><br><span class="line"><span class="comment"> * @return &#123;number[]&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">let</span> twoSum = <span class="function"><span class="keyword">function</span>(<span class="params">nums, target</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> a = []</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>, len = nums.length; i &lt; len; i++) &#123;</span><br><span class="line">        <span class="keyword">let</span> tmp = target - nums[i]</span><br><span class="line">        <span class="comment">// 如果a下标存在tmp值得下标则返回已经记录的下标值和当前下标值</span></span><br><span class="line">        <span class="keyword">if</span> (a[tmp] !== <span class="literal">undefined</span>)  <span class="keyword">return</span> [a[tmp], i]</span><br><span class="line">        <span class="comment">// 如果a[tmp] == undefined 则a存入对应数值tmp的下标,值为当前循环的下标</span></span><br><span class="line">        a[nums[i]] = i</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> res = twoSum([<span class="number">2</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">15</span>], <span class="number">9</span>)</span><br><span class="line"><span class="built_in">console</span>.log(res) <span class="comment">// [0, 1]</span></span><br></pre></td></tr></table></figure><h2 id="两数相加"><a href="#两数相加" class="headerlink" title="两数相加"></a>两数相加</h2><blockquote><p>2019年12月3日<br><br>题目:<br>给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。您可以假设除了数字 0 之外，这两个数都不会以 0 开头。<br><br>示例:<br>输入：(2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>输出：7 -&gt; 0 -&gt; 8<br>原因：342 + 465 = 807</p></blockquote><h3 id="解题过程中的心理活动"><a href="#解题过程中的心理活动" class="headerlink" title="解题过程中的心理活动"></a>解题过程中的心理活动</h3><p>最开始的时候看到题目一脸懵逼,瞬间去偷偷看了一眼答案,整个人愣了一下,然后象征性的跑了一下,我去!打印的是什么鬼,马上去谷歌补了个课,再结合答案好像感觉有点眉目了.<br><br>疑问是从如何去理解ListNode开始的</p><h3 id="ListNode是什么"><a href="#ListNode是什么" class="headerlink" title="ListNode是什么?"></a>ListNode是什么?</h3><blockquote><p>ListNode可以理解为js的数据结构-链表</p></blockquote><h4 id="单向链表"><a href="#单向链表" class="headerlink" title="单向链表"></a>单向链表</h4><blockquote><p>head -&gt; 数据 -&gt; 数据 -&gt; 数据 -&gt; null</p></blockquote><h5 id="单向链表的特点"><a href="#单向链表的特点" class="headerlink" title="单向链表的特点"></a>单向链表的特点</h5><ul><li>用一组任意的内存空间去存储数据元素（这里的内存空间可以是连续的，也可以是不连续的）</li><li>每个节点(node)都由数据本身和一个指向后续节点的指针组成</li><li>整个链表的存取必须从头指针开始，头指针指向第一个节点</li><li>最后一个节点的指针指向空（NULL）</li></ul><h5 id="链表的几个主要操作"><a href="#链表的几个主要操作" class="headerlink" title="链表的几个主要操作"></a>链表的几个主要操作</h5><ul><li>创建节点</li><li>插入节点</li><li>搜索/遍历节点</li><li>删除节点</li><li>合并</li></ul><p>具体文章参考 <a href="https://segmentfault.com/a/1190000017569816" target="_blank" rel="noopener">https://segmentfault.com/a/1190000017569816</a></p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * function ListNode(val) &#123;</span></span><br><span class="line"><span class="comment"> *     this.val = val;</span></span><br><span class="line"><span class="comment"> *     this.next = null;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;ListNode&#125; l1</span></span><br><span class="line"><span class="comment"> * @param &#123;ListNode&#125; l2</span></span><br><span class="line"><span class="comment"> * @return &#123;ListNode&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ListNode</span>(<span class="params">val</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.val = val;</span><br><span class="line">    <span class="keyword">this</span>.next = <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> addTwoNumbers = <span class="function"><span class="keyword">function</span> (<span class="params">l1, l2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> add = <span class="number">0</span>,</span><br><span class="line">        ans,</span><br><span class="line">        head;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (l1 || l2) &#123;</span><br><span class="line">        <span class="keyword">var</span> a = l1 ? l1.val : <span class="number">0</span>,</span><br><span class="line">            b = l2 ? l2.val : <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">console</span>.log(add, <span class="string">'add before'</span>)</span><br><span class="line">        <span class="keyword">var</span> sum = a + b + add;</span><br><span class="line">        <span class="built_in">console</span>.log(sum, <span class="string">'sum'</span>)</span><br><span class="line">        <span class="comment">// ~~向下取整</span></span><br><span class="line">        add = ~~(sum / <span class="number">10</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(add, <span class="string">'add after'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> node = <span class="keyword">new</span> ListNode(sum % <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!ans)</span><br><span class="line">            ans = head = node;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            head.next = node;</span><br><span class="line">            head = node;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 判断l1是否有子节点</span></span><br><span class="line">        <span class="keyword">if</span> (l1)</span><br><span class="line">            l1 = l1.next;</span><br><span class="line">        <span class="comment">// 判断l2是否有子节点</span></span><br><span class="line">        <span class="keyword">if</span> (l2)</span><br><span class="line">            l2 = l2.next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (add) &#123;</span><br><span class="line">        <span class="keyword">var</span> node = <span class="keyword">new</span> ListNode(add);</span><br><span class="line">        head.next = node;</span><br><span class="line">        head = node;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> l1_1 = <span class="keyword">new</span> ListNode(<span class="number">2</span>);</span><br><span class="line"><span class="keyword">let</span> l1_2 = <span class="keyword">new</span> ListNode(<span class="number">4</span>);</span><br><span class="line"><span class="keyword">let</span> l1_3 = <span class="keyword">new</span> ListNode(<span class="number">3</span>);</span><br><span class="line">l1_1.next = l1_2;</span><br><span class="line">l1_2.next = l1_3;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> l2_1 = <span class="keyword">new</span> ListNode(<span class="number">5</span>);</span><br><span class="line"><span class="keyword">let</span> l2_2 = <span class="keyword">new</span> ListNode(<span class="number">6</span>);</span><br><span class="line"><span class="keyword">let</span> l2_3 = <span class="keyword">new</span> ListNode(<span class="number">4</span>);</span><br><span class="line">l2_1.next = l2_2;</span><br><span class="line">l2_2.next = l2_3;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> input1 = l1_1;</span><br><span class="line"><span class="keyword">const</span> input2 = l2_1;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(input1);</span><br><span class="line"><span class="built_in">console</span>.log(input2);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(addTwoNumbers(input1, input2));</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
+<search>
+  <entry>
+    <title>LeetCode-每日一题</title>
+    <url>/2019/12/02/leetcode-everyday/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>开这篇每日一题的博客,题目是从LeetCode上面找的,解题思路我会一步一步的去剖析,希望可以从这个习惯开始使自己的功力更上一层</li>
+</ul>
+<a id="more"></a>
+<h2 id="两数之和"><a href="#两数之和" class="headerlink" title="两数之和"></a>两数之和</h2><blockquote>
+<p>2019年12月2日<br><br>题目:<br>给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。<br><br>示例:<br>给定 nums = [2, 7, 11, 15], target = 9<br>因为 nums[0] + nums[1] = 2 + 7 = 9<br>所以返回 [0, 1]</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;number[]&#125; nums</span></span><br><span class="line"><span class="comment"> * @param &#123;number&#125; target</span></span><br><span class="line"><span class="comment"> * @return &#123;number[]&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">let</span> twoSum = <span class="function"><span class="keyword">function</span>(<span class="params">nums, target</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> a = []</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>, len = nums.length; i &lt; len; i++) &#123;</span><br><span class="line">        <span class="keyword">let</span> tmp = target - nums[i]</span><br><span class="line">        <span class="comment">// 如果a下标存在tmp值得下标则返回已经记录的下标值和当前下标值</span></span><br><span class="line">        <span class="keyword">if</span> (a[tmp] !== <span class="literal">undefined</span>)  <span class="keyword">return</span> [a[tmp], i]</span><br><span class="line">        <span class="comment">// 如果a[tmp] == undefined 则a存入对应数值tmp的下标,值为当前循环的下标</span></span><br><span class="line">        a[nums[i]] = i</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> res = twoSum([<span class="number">2</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">15</span>], <span class="number">9</span>)</span><br><span class="line"><span class="built_in">console</span>.log(res) <span class="comment">// [0, 1]</span></span><br></pre></td></tr></table></figure>
+<h2 id="两数相加"><a href="#两数相加" class="headerlink" title="两数相加"></a>两数相加</h2><blockquote>
+<p>2019年12月3日<br><br>题目:<br>给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。您可以假设除了数字 0 之外，这两个数都不会以 0 开头。<br><br>示例:<br>输入：(2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>输出：7 -&gt; 0 -&gt; 8<br>原因：342 + 465 = 807</p>
+</blockquote>
+<h3 id="解题过程中的心理活动"><a href="#解题过程中的心理活动" class="headerlink" title="解题过程中的心理活动"></a>解题过程中的心理活动</h3><p>最开始的时候看到题目一脸懵逼,瞬间去偷偷看了一眼答案,整个人愣了一下,然后象征性的跑了一下,我去!打印的是什么鬼,马上去谷歌补了个课,再结合答案好像感觉有点眉目了.<br><br>疑问是从如何去理解ListNode开始的</p>
+<h3 id="ListNode是什么"><a href="#ListNode是什么" class="headerlink" title="ListNode是什么?"></a>ListNode是什么?</h3><blockquote>
+<p>ListNode可以理解为js的数据结构-链表</p>
+</blockquote>
+<h4 id="单向链表"><a href="#单向链表" class="headerlink" title="单向链表"></a>单向链表</h4><blockquote>
+<p>head -&gt; 数据 -&gt; 数据 -&gt; 数据 -&gt; null</p>
+</blockquote>
+<h5 id="单向链表的特点"><a href="#单向链表的特点" class="headerlink" title="单向链表的特点"></a>单向链表的特点</h5><ul>
+<li>用一组任意的内存空间去存储数据元素（这里的内存空间可以是连续的，也可以是不连续的）</li>
+<li>每个节点(node)都由数据本身和一个指向后续节点的指针组成</li>
+<li>整个链表的存取必须从头指针开始，头指针指向第一个节点</li>
+<li>最后一个节点的指针指向空（NULL）</li>
+</ul>
+<h5 id="链表的几个主要操作"><a href="#链表的几个主要操作" class="headerlink" title="链表的几个主要操作"></a>链表的几个主要操作</h5><ul>
+<li>创建节点</li>
+<li>插入节点</li>
+<li>搜索/遍历节点</li>
+<li>删除节点</li>
+<li>合并</li>
+</ul>
+<p>具体文章参考 <a href="https://segmentfault.com/a/1190000017569816" target="_blank" rel="noopener">https://segmentfault.com/a/1190000017569816</a></p>
+<h3 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * function ListNode(val) &#123;</span></span><br><span class="line"><span class="comment"> *     this.val = val;</span></span><br><span class="line"><span class="comment"> *     this.next = null;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;ListNode&#125; l1</span></span><br><span class="line"><span class="comment"> * @param &#123;ListNode&#125; l2</span></span><br><span class="line"><span class="comment"> * @return &#123;ListNode&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ListNode</span>(<span class="params">val</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.val = val;</span><br><span class="line">    <span class="keyword">this</span>.next = <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> addTwoNumbers = <span class="function"><span class="keyword">function</span> (<span class="params">l1, l2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> add = <span class="number">0</span>,</span><br><span class="line">        ans,</span><br><span class="line">        head;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (l1 || l2) &#123;</span><br><span class="line">        <span class="keyword">var</span> a = l1 ? l1.val : <span class="number">0</span>,</span><br><span class="line">            b = l2 ? l2.val : <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">console</span>.log(add, <span class="string">'add before'</span>)</span><br><span class="line">        <span class="keyword">var</span> sum = a + b + add;</span><br><span class="line">        <span class="built_in">console</span>.log(sum, <span class="string">'sum'</span>)</span><br><span class="line">        <span class="comment">// ~~向下取整</span></span><br><span class="line">        add = ~~(sum / <span class="number">10</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(add, <span class="string">'add after'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> node = <span class="keyword">new</span> ListNode(sum % <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!ans)</span><br><span class="line">            ans = head = node;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            head.next = node;</span><br><span class="line">            head = node;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 判断l1是否有子节点</span></span><br><span class="line">        <span class="keyword">if</span> (l1)</span><br><span class="line">            l1 = l1.next;</span><br><span class="line">        <span class="comment">// 判断l2是否有子节点</span></span><br><span class="line">        <span class="keyword">if</span> (l2)</span><br><span class="line">            l2 = l2.next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (add) &#123;</span><br><span class="line">        <span class="keyword">var</span> node = <span class="keyword">new</span> ListNode(add);</span><br><span class="line">        head.next = node;</span><br><span class="line">        head = node;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> l1_1 = <span class="keyword">new</span> ListNode(<span class="number">2</span>);</span><br><span class="line"><span class="keyword">let</span> l1_2 = <span class="keyword">new</span> ListNode(<span class="number">4</span>);</span><br><span class="line"><span class="keyword">let</span> l1_3 = <span class="keyword">new</span> ListNode(<span class="number">3</span>);</span><br><span class="line">l1_1.next = l1_2;</span><br><span class="line">l1_2.next = l1_3;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> l2_1 = <span class="keyword">new</span> ListNode(<span class="number">5</span>);</span><br><span class="line"><span class="keyword">let</span> l2_2 = <span class="keyword">new</span> ListNode(<span class="number">6</span>);</span><br><span class="line"><span class="keyword">let</span> l2_3 = <span class="keyword">new</span> ListNode(<span class="number">4</span>);</span><br><span class="line">l2_1.next = l2_2;</span><br><span class="line">l2_2.next = l2_3;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> input1 = l1_1;</span><br><span class="line"><span class="keyword">const</span> input2 = l2_1;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(input1);</span><br><span class="line"><span class="built_in">console</span>.log(input2);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(addTwoNumbers(input1, input2));</span><br></pre></td></tr></table></figure>
+]]></content>
       <categories>
-          
-          <category> JavaScript </category>
-          
-          <category> 算法题 </category>
-          
+        <category>JavaScript</category>
+        <category>算法题</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>es6系列-介绍</title>
-      <link href="/2019/10/30/es6-introduced/"/>
-      <url>/2019/10/30/es6-introduced/</url>
-      
-        <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul><li>ES6， 全称 ECMAScript 6.0 ，是 JavaScript 的下一个版本标准，2015.06 发版。ES6 主要是为了解决 ES5 的先天不足，比如 JavaScript 里并没有类的概念，但是目前浏览器的 JavaScript 是 ES5 版本，大多数高版本的浏览器也支持 ES6，不过只实现了 ES6 的部分特性和功能</li></ul><h2 id="ECMAScript-的背景"><a href="#ECMAScript-的背景" class="headerlink" title="ECMAScript 的背景"></a>ECMAScript 的背景</h2><ul><li>JavaScript 是大家所了解的语言名称，但是这个语言名称是商标（ Oracle 公司注册的商标）。因此，JavaScript 的正式名称是 ECMAScript 。1996年11月，JavaScript 的创造者网景公司将 JS 提交给国际化标准组织 ECMA（European computer manufactures association，欧洲计算机制造联合会），希望这种语言能够成为国际标准，随后 ECMA 发布了规定浏览器脚本语言的标准，即 ECMAScript。这也有利于这门语言的开放和中立。</li></ul><a id="more"></a><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote><p>这个系列打算总结下es6的知识,总结目录如下</p></blockquote><ul><li>声明与表达式<ul><li>let与const<ul><li>let命令<ul><li>基本用法</li><li>代码块内有效</li><li>不能重复声明</li><li>迭代计数使用</li><li>无变量提升</li></ul></li><li>const命令<ul><li>基本用法</li><li>暂时性死区</li><li>注意要点</li></ul></li></ul></li><li>内置对象<ul><li>新增<ul><li>set与map<ul><li>map对象<ul><li>map中的key</li><li>map迭代</li><li>map对象的操作</li></ul></li><li>set 对象<ul><li>类型转换</li><li>set对象的作用</li></ul></li><li>map与set对象属性与方法</li></ul></li><li>proxy与Reflect<ul><li>概述</li><li>基本用法<ul><li>proxy</li><li>reflect</li><li>组合使用</li></ul></li><li>使用场景扩展</li></ul></li></ul></li><li>扩展<ul><li>字符串<ul><li>扩展的方法<ul><li>子串的识别</li><li>字符串重复</li><li>字符串补全</li></ul></li><li>模板字符串<ul><li>基本用法</li><li>注意要点</li><li>标签模板</li></ul></li></ul></li><li>数值<ul><li>数值的表示</li><li>常量</li><li>方法</li><li>math对象的扩展</li></ul></li><li>对象<ul><li>对象字面量</li><li>对象的扩展运算符</li><li>对象的新方法<ul><li>assign</li><li>is</li></ul></li></ul></li><li>数组<ul><li>数组的创建</li><li>扩展的方法</li><li>数组缓冲区</li><li>定型数组</li><li>扩展运算符</li></ul></li></ul></li></ul></li><li>运算符与语句<ul><li>函数<ul><li>函数的扩展<ul><li>默认参数</li><li>不定参数</li></ul></li><li>箭头函数<ul><li>基本用法</li><li>注意要点</li><li>使用的场景</li><li>不适合使用的场景</li></ul></li></ul></li><li>迭代器<ul><li>iterator<ul><li>迭代过程</li><li>可迭代的数据结构</li><li>普通对象不可迭代</li></ul></li><li>for…of循环<ul><li>迭代常规数据类型</li><li>可迭代的数据结构</li><li>let,const和var用于for…of</li></ul></li></ul></li><li>class类<ul><li>概述</li><li>基本用法<ul><li>类定义</li><li>类的主题</li><li>类的实例化</li></ul></li><li>decorator<ul><li>类装饰</li><li>方法修饰</li></ul></li><li>封装与继承<ul><li>get/setter</li><li>extends</li><li>super</li><li>注意要点</li></ul></li></ul></li><li>模块<ul><li>概述</li><li>特点</li><li>export与import<ul><li>基本用法</li><li>as的用法</li><li>import命令的特点</li><li>export default命令</li></ul></li><li>复合使用</li></ul></li></ul></li><li>异步编程<ul><li>promise对象<ul><li>概述</li><li>promise状态<ul><li>特点</li><li>缺点</li></ul></li><li>then方法<ul><li>特点</li><li>缺点</li></ul></li></ul></li><li>generator函数<ul><li>基本用法<ul><li>函数组成</li><li>执行机制</li><li>返回方法</li><li>yield* 表达式</li></ul></li><li>使用场景</li></ul></li><li>async函数<ul><li>async<ul><li>语法</li><li>返回值</li></ul></li><li>await<ul><li>语法</li><li>返回值</li></ul></li><li>错误处理</li><li>注意要点</li><li>实例</li></ul></li></ul></li></ul></li></ul><h2 id="声明与表达式"><a href="#声明与表达式" class="headerlink" title="声明与表达式"></a>声明与表达式</h2><h3 id="let与const"><a href="#let与const" class="headerlink" title="let与const"></a>let与const</h3><h4 id="let命令"><a href="#let命令" class="headerlink" title="let命令"></a>let命令</h4><h5 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  let a = 0;</span><br><span class="line">  a   // 0</span><br><span class="line">&#125;</span><br><span class="line">a   // 报错 ReferenceError: a is not defined</span><br></pre></td></tr></table></figure><h5 id="代码块内有效"><a href="#代码块内有效" class="headerlink" title="代码块内有效"></a>代码块内有效</h5><blockquote><p>let 是在代码块内有效，var 是在全局范围内有效:</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  let a = 0;</span><br><span class="line">  var b = 1;</span><br><span class="line">&#125;</span><br><span class="line">a  // ReferenceError: a is not defined</span><br><span class="line">b  // 1</span><br></pre></td></tr></table></figure><h5 id="不能重复声明"><a href="#不能重复声明" class="headerlink" title="不能重复声明"></a>不能重复声明</h5><blockquote><p>let 只能声明一次 var 可以声明多次:</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let a = 1;</span><br><span class="line">let a = 2;</span><br><span class="line">var b = 3;</span><br><span class="line">var b = 4;</span><br><span class="line">a  // Identifier &apos;a&apos; has already been declared</span><br><span class="line">b  // 4</span><br></pre></td></tr></table></figure><blockquote><p>for 循环计数器很适合用 let</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">for (var i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">  setTimeout(function()&#123;</span><br><span class="line">    console.log(i);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">// 输出十个 10</span><br><span class="line">for (let j = 0; j &lt; 10; j++) &#123;</span><br><span class="line">  setTimeout(function()&#123;</span><br><span class="line">    console.log(j);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">// 输出 0123456789</span><br></pre></td></tr></table></figure><blockquote><p>变量 i 是用 var 声明的，在全局范围内有效，所以全局中只有一个变量 i, 每次循环时，setTimeout 定时器里面的 i 指的是全局变量 i ，而循环里的十个 setTimeout 是在循环结束后才执行，所以此时的 i 都是 10。变量 j 是用 let 声明的，当前的 i 只在本轮循环中有效，每次循环的 j 其实都是一个新的变量，所以 setTimeout 定时器里面的 j 其实是不同的变量，即最后输出12345。（若每次循环的变量 j 都是重新声明的，如何知道前一个循环的值？这是因为 JavaScript 引擎内部会记住前一个循环的值）。</p></blockquote><h5 id="不存在变量提升"><a href="#不存在变量提升" class="headerlink" title="不存在变量提升"></a>不存在变量提升</h5><blockquote><p>let 不存在变量提升，var 会变量提升:</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">console.log(a);  //ReferenceError: a is not defined</span><br><span class="line">let a = &quot;apple&quot;;</span><br><span class="line"> </span><br><span class="line">console.log(b);  //undefined</span><br><span class="line">var b = &quot;banana&quot;;</span><br></pre></td></tr></table></figure><blockquote><p>变量 b 用 var 声明存在变量提升，所以当脚本开始运行的时候，b 已经存在了，但是还没有赋值，所以会输出 undefined。变量 a 用 let 声明不存在变量提升，在声明变量 a 之前，a 不存在，所以会报错。</p></blockquote><h4 id="const命令"><a href="#const命令" class="headerlink" title="const命令"></a>const命令</h4><h5 id="基本用法-1"><a href="#基本用法-1" class="headerlink" title="基本用法"></a>基本用法</h5><blockquote><p>const 声明一个只读变量，声明之后不允许改变。意味着，一旦声明必须初始化，否则会报错</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const PI = &quot;3.1415926&quot;;</span><br><span class="line">PI  // 3.1415926</span><br><span class="line"></span><br><span class="line">const MY_AGE;  // SyntaxError: Missing initializer in const declaration</span><br></pre></td></tr></table></figure><h5 id="暂时性死区"><a href="#暂时性死区" class="headerlink" title="暂时性死区"></a>暂时性死区</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var PI = &quot;a&quot;;</span><br><span class="line">if(true)&#123;</span><br><span class="line">  console.log(PI);  // ReferenceError: PI is not defined</span><br><span class="line">  const PI = &quot;3.1415926&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><blockquote><p>ES6 明确规定，代码块内如果存在 let 或者 const，代码块会对这些命令声明的变量从块的开始就形成一个封闭作用域。代码块内，在声明变量 PI 之前使用它会报错。</p></blockquote><h5 id="注意要点"><a href="#注意要点" class="headerlink" title="注意要点"></a>注意要点</h5><blockquote><p>const 如何做到变量在声明初始化之后不允许改变的？其实 const 其实保证的不是变量的值不变，而是保证变量指向的内存地址所保存的数据不允许改动。此时，你可能已经想到，简单类型和复合类型保存值的方式是不同的。是的，对于简单类型（数值 number、字符串 string 、布尔值 boolean）,值就保存在变量指向的那个内存地址，因此 const 声明的简单类型变量等同于常量。而复杂类型（对象 object，数组 array，函数 function），变量指向的内存地址其实是保存了一个指向实际数据的指针，所以 const 只能保证指针是固定的，至于指针指向的数据结构变不变就无法控制了，所以使用 const 声明复杂类型对象时要慎重。</p></blockquote>]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>es6系列-介绍</title>
+    <url>/2019/10/30/es6-introduced/</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
+<li>ES6， 全称 ECMAScript 6.0 ，是 JavaScript 的下一个版本标准，2015.06 发版。ES6 主要是为了解决 ES5 的先天不足，比如 JavaScript 里并没有类的概念，但是目前浏览器的 JavaScript 是 ES5 版本，大多数高版本的浏览器也支持 ES6，不过只实现了 ES6 的部分特性和功能</li>
+</ul>
+<h2 id="ECMAScript-的背景"><a href="#ECMAScript-的背景" class="headerlink" title="ECMAScript 的背景"></a>ECMAScript 的背景</h2><ul>
+<li>JavaScript 是大家所了解的语言名称，但是这个语言名称是商标（ Oracle 公司注册的商标）。因此，JavaScript 的正式名称是 ECMAScript 。1996年11月，JavaScript 的创造者网景公司将 JS 提交给国际化标准组织 ECMA（European computer manufactures association，欧洲计算机制造联合会），希望这种语言能够成为国际标准，随后 ECMA 发布了规定浏览器脚本语言的标准，即 ECMAScript。这也有利于这门语言的开放和中立。</li>
+</ul>
+<a id="more"></a>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>这个系列打算总结下es6的知识,总结目录如下</p>
+</blockquote>
+<ul>
+<li>声明与表达式<ul>
+<li>let与const<ul>
+<li>let命令<ul>
+<li>基本用法</li>
+<li>代码块内有效</li>
+<li>不能重复声明</li>
+<li>迭代计数使用</li>
+<li>无变量提升</li>
+</ul>
+</li>
+<li>const命令<ul>
+<li>基本用法</li>
+<li>暂时性死区</li>
+<li>注意要点</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>内置对象<ul>
+<li>新增<ul>
+<li>set与map<ul>
+<li>map对象<ul>
+<li>map中的key</li>
+<li>map迭代</li>
+<li>map对象的操作</li>
+</ul>
+</li>
+<li>set 对象<ul>
+<li>类型转换</li>
+<li>set对象的作用</li>
+</ul>
+</li>
+<li>map与set对象属性与方法</li>
+</ul>
+</li>
+<li>proxy与Reflect<ul>
+<li>概述</li>
+<li>基本用法<ul>
+<li>proxy</li>
+<li>reflect</li>
+<li>组合使用</li>
+</ul>
+</li>
+<li>使用场景扩展</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>扩展<ul>
+<li>字符串<ul>
+<li>扩展的方法<ul>
+<li>子串的识别</li>
+<li>字符串重复</li>
+<li>字符串补全</li>
+</ul>
+</li>
+<li>模板字符串<ul>
+<li>基本用法</li>
+<li>注意要点</li>
+<li>标签模板</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数值<ul>
+<li>数值的表示</li>
+<li>常量</li>
+<li>方法</li>
+<li>math对象的扩展</li>
+</ul>
+</li>
+<li>对象<ul>
+<li>对象字面量</li>
+<li>对象的扩展运算符</li>
+<li>对象的新方法<ul>
+<li>assign</li>
+<li>is</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数组<ul>
+<li>数组的创建</li>
+<li>扩展的方法</li>
+<li>数组缓冲区</li>
+<li>定型数组</li>
+<li>扩展运算符</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>运算符与语句<ul>
+<li>函数<ul>
+<li>函数的扩展<ul>
+<li>默认参数</li>
+<li>不定参数</li>
+</ul>
+</li>
+<li>箭头函数<ul>
+<li>基本用法</li>
+<li>注意要点</li>
+<li>使用的场景</li>
+<li>不适合使用的场景</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>迭代器<ul>
+<li>iterator<ul>
+<li>迭代过程</li>
+<li>可迭代的数据结构</li>
+<li>普通对象不可迭代</li>
+</ul>
+</li>
+<li>for…of循环<ul>
+<li>迭代常规数据类型</li>
+<li>可迭代的数据结构</li>
+<li>let,const和var用于for…of</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>class类<ul>
+<li>概述</li>
+<li>基本用法<ul>
+<li>类定义</li>
+<li>类的主题</li>
+<li>类的实例化</li>
+</ul>
+</li>
+<li>decorator<ul>
+<li>类装饰</li>
+<li>方法修饰</li>
+</ul>
+</li>
+<li>封装与继承<ul>
+<li>get/setter</li>
+<li>extends</li>
+<li>super</li>
+<li>注意要点</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>模块<ul>
+<li>概述</li>
+<li>特点</li>
+<li>export与import<ul>
+<li>基本用法</li>
+<li>as的用法</li>
+<li>import命令的特点</li>
+<li>export default命令</li>
+</ul>
+</li>
+<li>复合使用</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>异步编程<ul>
+<li>promise对象<ul>
+<li>概述</li>
+<li>promise状态<ul>
+<li>特点</li>
+<li>缺点</li>
+</ul>
+</li>
+<li>then方法<ul>
+<li>特点</li>
+<li>缺点</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>generator函数<ul>
+<li>基本用法<ul>
+<li>函数组成</li>
+<li>执行机制</li>
+<li>返回方法</li>
+<li>yield* 表达式</li>
+</ul>
+</li>
+<li>使用场景</li>
+</ul>
+</li>
+<li>async函数<ul>
+<li>async<ul>
+<li>语法</li>
+<li>返回值</li>
+</ul>
+</li>
+<li>await<ul>
+<li>语法</li>
+<li>返回值</li>
+</ul>
+</li>
+<li>错误处理</li>
+<li>注意要点</li>
+<li>实例</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="声明与表达式"><a href="#声明与表达式" class="headerlink" title="声明与表达式"></a>声明与表达式</h2><h3 id="let与const"><a href="#let与const" class="headerlink" title="let与const"></a>let与const</h3><h4 id="let命令"><a href="#let命令" class="headerlink" title="let命令"></a>let命令</h4><h5 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  let a = 0;</span><br><span class="line">  a   // 0</span><br><span class="line">&#125;</span><br><span class="line">a   // 报错 ReferenceError: a is not defined</span><br></pre></td></tr></table></figure>
+<h5 id="代码块内有效"><a href="#代码块内有效" class="headerlink" title="代码块内有效"></a>代码块内有效</h5><blockquote>
+<p>let 是在代码块内有效，var 是在全局范围内有效:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  let a = 0;</span><br><span class="line">  var b = 1;</span><br><span class="line">&#125;</span><br><span class="line">a  // ReferenceError: a is not defined</span><br><span class="line">b  // 1</span><br></pre></td></tr></table></figure>
+<h5 id="不能重复声明"><a href="#不能重复声明" class="headerlink" title="不能重复声明"></a>不能重复声明</h5><blockquote>
+<p>let 只能声明一次 var 可以声明多次:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">let a = 1;</span><br><span class="line">let a = 2;</span><br><span class="line">var b = 3;</span><br><span class="line">var b = 4;</span><br><span class="line">a  // Identifier &apos;a&apos; has already been declared</span><br><span class="line">b  // 4</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>for 循环计数器很适合用 let</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">for (var i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">  setTimeout(function()&#123;</span><br><span class="line">    console.log(i);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">// 输出十个 10</span><br><span class="line">for (let j = 0; j &lt; 10; j++) &#123;</span><br><span class="line">  setTimeout(function()&#123;</span><br><span class="line">    console.log(j);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">// 输出 0123456789</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>变量 i 是用 var 声明的，在全局范围内有效，所以全局中只有一个变量 i, 每次循环时，setTimeout 定时器里面的 i 指的是全局变量 i ，而循环里的十个 setTimeout 是在循环结束后才执行，所以此时的 i 都是 10。变量 j 是用 let 声明的，当前的 i 只在本轮循环中有效，每次循环的 j 其实都是一个新的变量，所以 setTimeout 定时器里面的 j 其实是不同的变量，即最后输出12345。（若每次循环的变量 j 都是重新声明的，如何知道前一个循环的值？这是因为 JavaScript 引擎内部会记住前一个循环的值）。</p>
+</blockquote>
+<h5 id="不存在变量提升"><a href="#不存在变量提升" class="headerlink" title="不存在变量提升"></a>不存在变量提升</h5><blockquote>
+<p>let 不存在变量提升，var 会变量提升:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">console.log(a);  //ReferenceError: a is not defined</span><br><span class="line">let a = &quot;apple&quot;;</span><br><span class="line"> </span><br><span class="line">console.log(b);  //undefined</span><br><span class="line">var b = &quot;banana&quot;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>变量 b 用 var 声明存在变量提升，所以当脚本开始运行的时候，b 已经存在了，但是还没有赋值，所以会输出 undefined。变量 a 用 let 声明不存在变量提升，在声明变量 a 之前，a 不存在，所以会报错。</p>
+</blockquote>
+<h4 id="const命令"><a href="#const命令" class="headerlink" title="const命令"></a>const命令</h4><h5 id="基本用法-1"><a href="#基本用法-1" class="headerlink" title="基本用法"></a>基本用法</h5><blockquote>
+<p>const 声明一个只读变量，声明之后不允许改变。意味着，一旦声明必须初始化，否则会报错</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const PI = &quot;3.1415926&quot;;</span><br><span class="line">PI  // 3.1415926</span><br><span class="line"></span><br><span class="line">const MY_AGE;  // SyntaxError: Missing initializer in const declaration</span><br></pre></td></tr></table></figure>
+<h5 id="暂时性死区"><a href="#暂时性死区" class="headerlink" title="暂时性死区"></a>暂时性死区</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var PI = &quot;a&quot;;</span><br><span class="line">if(true)&#123;</span><br><span class="line">  console.log(PI);  // ReferenceError: PI is not defined</span><br><span class="line">  const PI = &quot;3.1415926&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>ES6 明确规定，代码块内如果存在 let 或者 const，代码块会对这些命令声明的变量从块的开始就形成一个封闭作用域。代码块内，在声明变量 PI 之前使用它会报错。</p>
+</blockquote>
+<h5 id="注意要点"><a href="#注意要点" class="headerlink" title="注意要点"></a>注意要点</h5><blockquote>
+<p>const 如何做到变量在声明初始化之后不允许改变的？其实 const 其实保证的不是变量的值不变，而是保证变量指向的内存地址所保存的数据不允许改动。此时，你可能已经想到，简单类型和复合类型保存值的方式是不同的。是的，对于简单类型（数值 number、字符串 string 、布尔值 boolean）,值就保存在变量指向的那个内存地址，因此 const 声明的简单类型变量等同于常量。而复杂类型（对象 object，数组 array，函数 function），变量指向的内存地址其实是保存了一个指向实际数据的指针，所以 const 只能保证指针是固定的，至于指针指向的数据结构变不变就无法控制了，所以使用 const 声明复杂类型对象时要慎重。</p>
+</blockquote>
+]]></content>
       <categories>
-          
-          <category> es6 </category>
-          
-          <category> es6知识 </category>
-          
+        <category>es6</category>
+        <category>es6知识</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>JavaScript数组</title>
-      <link href="/2019/07/10/javascript_array/"/>
-      <url>/2019/07/10/javascript_array/</url>
-      
-        <content type="html"><![CDATA[<h4 id="创建方法"><a href="#创建方法" class="headerlink" title="创建方法"></a>创建方法</h4><ul><li>空数组: var Obj = new Array()</li><li>指定长度数组: var Obj = new Array(Size)</li><li>置顶元素数组: var Obj = new Array(元素1, 元素2, 元素3, …, 元素N)</li><li>单维数组: var Obj = new Array(元素1, 元素2, 元素3, …, 元素N)</li><li>多维数组: var Obj = new Array([数组序列1], [数组序列2], [数组序列N])</li></ul><a id="more"></a><h4 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h4><ul><li>存取数组元素<ul><li>单维数组: 数组名[下标]</li><li>多维数组: 数组名[外层数组下标][内层数组下标]</li><li>特性<ul><li>数组长度是弹性的,可自由伸缩</li><li>数组下表从0开始</li><li>下标类型<ul><li>数值</li><li>非数值<ul><li>转为字符串</li><li>生成关联数组</li><li>下标作为对象属性的名字</li></ul></li><li>数组元素可添加到对象中</li></ul></li></ul></li></ul></li><li>增加数组: 使用[]运算符指定一个新下标</li><li>删除数组: delete数组名[下标]</li><li>遍历数组: for(var 元素变量 in 数组)</li></ul><h4 id="数组属性"><a href="#数组属性" class="headerlink" title="数组属性"></a>数组属性</h4><ul><li>constructor: 引用数组对象的构造函数;</li><li>length: 返回数组的长度;</li><li>prototype: 通过增加属性和方法扩展数组定义;</li></ul><h4 id="ES3"><a href="#ES3" class="headerlink" title="ES3"></a>ES3</h4><ul><li><p><strong>添加</strong></p><ul><li><p><strong>push()</strong>: 在数组末尾添加数组</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var animals = [&apos;pigs&apos;, &apos;goats&apos;, &apos;sheep&apos;];</span><br><span class="line"></span><br><span class="line">console.log(animals.push(&apos;cows&apos;));</span><br><span class="line">// expected output: 4</span><br><span class="line"></span><br><span class="line">console.log(animals);</span><br><span class="line">// expected output: Array [&quot;pigs&quot;, &quot;goats&quot;, &quot;sheep&quot;, &quot;cows&quot;]</span><br><span class="line"></span><br><span class="line">animals.push(&apos;chickens&apos;);</span><br><span class="line"></span><br><span class="line">console.log(animals);</span><br><span class="line">// expected output: Array [&quot;pigs&quot;, &quot;goats&quot;, &quot;sheep&quot;, &quot;cows&quot;, &quot;chickens&quot;]</span><br></pre></td></tr></table></figure></li><li><p><strong>unshift()</strong>: 在数组头部添加元素</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var array1 = [1, 2, 3];</span><br><span class="line">    </span><br><span class="line">console.log(array1.unshift(4, 5));</span><br><span class="line">// expected output: 5</span><br><span class="line"></span><br><span class="line">console.log(array1);</span><br><span class="line">// expected output: Array [4, 5, 1, 2, 3]</span><br></pre></td></tr></table></figure></li><li><p><strong>concat()</strong>: 合并两个数组</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var array1 = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;];</span><br><span class="line">var array2 = [&apos;d&apos;, &apos;e&apos;, &apos;f&apos;];</span><br><span class="line"></span><br><span class="line">console.log(array1.concat(array2));</span><br><span class="line">// expected output: Array [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]</span><br></pre></td></tr></table></figure></li></ul></li><li><p><strong>删除</strong></p><ul><li><p><strong>pop()</strong>: 删除并返回数值的最后一个元素;</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var plants = [&apos;broccoli&apos;, &apos;cauliflower&apos;, &apos;cabbage&apos;, &apos;kale&apos;, &apos;tomato&apos;];</span><br><span class="line">    </span><br><span class="line">console.log(plants.pop());</span><br><span class="line">// expected output: &quot;tomato&quot;</span><br><span class="line"></span><br><span class="line">console.log(plants);</span><br><span class="line">// expected output: Array [&quot;broccoli&quot;, &quot;cauliflower&quot;, &quot;cabbage&quot;, &quot;kale&quot;]</span><br><span class="line"></span><br><span class="line">plants.pop();</span><br><span class="line"></span><br><span class="line">console.log(plants);</span><br><span class="line">// expected output: Array [&quot;broccoli&quot;, &quot;cauliflower&quot;, &quot;cabbage&quot;]</span><br></pre></td></tr></table></figure></li><li><p><strong>shift()</strong>: 删除并返回数值的最后一个元素;</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var array1 = [1, 2, 3];</span><br><span class="line"></span><br><span class="line">var firstElement = array1.shift();</span><br><span class="line"></span><br><span class="line">console.log(array1);</span><br><span class="line">// expected output: Array [2, 3]</span><br><span class="line"></span><br><span class="line">console.log(firstElement);</span><br><span class="line">// expected output: 1</span><br></pre></td></tr></table></figure></li></ul></li><li><p><strong>子数组</strong></p><ul><li><p><strong>splice()</strong></p><ul><li><p>删除任意数量的项</p><ul><li>要删除的其实下标</li><li>要删除的项数<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var months = [&apos;Jan&apos;, &apos;March&apos;, &apos;April&apos;, &apos;June&apos;];</span><br><span class="line">months.splice(0, 1)</span><br><span class="line">// expected output: Array [&apos;March&apos;, &apos;April&apos;, &apos;June&apos;]</span><br></pre></td></tr></table></figure></li></ul></li><li><p>在指定位置插入指定的项</p><ul><li>起始下标</li><li>0(不删除任何项)</li><li>要插入的项<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var months = [&apos;Jan&apos;, &apos;March&apos;, &apos;April&apos;, &apos;June&apos;];</span><br><span class="line">months.splice(1, 0, &apos;Feb&apos;);</span><br><span class="line">// inserts at index 1</span><br><span class="line">console.log(months);</span><br><span class="line">// expected output: Array [&apos;Jan&apos;, &apos;Feb&apos;, &apos;March&apos;, &apos;April&apos;, &apos;June&apos;]</span><br></pre></td></tr></table></figure></li></ul></li><li><p>替换任意数量的项</p><ul><li>起始下标</li><li>要删除的项数</li><li>要插入的项<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var months = [&apos;Jan&apos;, &apos;March&apos;, &apos;April&apos;, &apos;June&apos;];</span><br><span class="line">months.splice(4, 1, &apos;May&apos;);</span><br><span class="line">// replaces 1 element at index 4</span><br><span class="line">console.log(months);</span><br><span class="line">// expected output: Array [&apos;Jan&apos;, &apos;Feb&apos;, &apos;April&apos;, &apos;May&apos;]</span><br></pre></td></tr></table></figure></li></ul></li></ul></li><li><p><strong>slice()</strong></p><ul><li>功能: 从已有数组中选取部分元素构成新数组</li><li>参数<ul><li>返回项的起始位置</li><li>返回项的结束位置</li></ul></li><li>特征<ul><li>如果是负数,则用数组长度加上该值得确定位置</li><li>起始位置为数组实际下标</li><li>结束位置的实际下标为结束数值减1<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">var animals = [&apos;ant&apos;, &apos;bison&apos;, &apos;camel&apos;, &apos;duck&apos;, &apos;elephant&apos;];</span><br><span class="line"></span><br><span class="line">console.log(animals.slice(2));</span><br><span class="line">// expected output: Array [&quot;camel&quot;, &quot;duck&quot;, &quot;elephant&quot;]</span><br><span class="line"></span><br><span class="line">console.log(animals.slice(2, 4));</span><br><span class="line">// expected output: Array [&quot;camel&quot;, &quot;duck&quot;]</span><br><span class="line"></span><br><span class="line">console.log(animals.slice(1, 5));</span><br><span class="line">// expected output: Array [&quot;bison&quot;, &quot;camel&quot;, &quot;duck&quot;, &quot;elephant&quot;]</span><br><span class="line"></span><br><span class="line">console.log(animals.slice(-1));</span><br><span class="line">// expected output: Array [&quot;elephant&quot;]</span><br><span class="line"></span><br><span class="line">console.log(animals.slice(-2));</span><br><span class="line">// expected output: Array [&quot;duck&quot;, &quot;elephant&quot;]</span><br></pre></td></tr></table></figure></li></ul></li></ul></li></ul></li></ul><pre><code>&gt; 注: slice() 方法返回一个新的数组对象，这一对象是一个由 begin和 end（不包括end）决定的原数组的浅拷贝。原始数组不会被改变。</code></pre><ul><li><p><strong>数组排序</strong></p><ul><li><p>reverse(): 颠倒数组中元素的顺序</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var array1 = [&apos;one&apos;, &apos;two&apos;, &apos;three&apos;];</span><br><span class="line">console.log(&apos;array1: &apos;, array1);</span><br><span class="line">// expected output: Array [&apos;one&apos;, &apos;two&apos;, &apos;three&apos;]</span><br><span class="line"></span><br><span class="line">var reversed = array1.reverse(); </span><br><span class="line">console.log(&apos;reversed: &apos;, reversed);</span><br><span class="line">// expected output: Array [&apos;three&apos;, &apos;two&apos;, &apos;one&apos;]</span><br><span class="line"></span><br><span class="line">/* Careful: reverse is destructive. It also changes</span><br><span class="line">the original array */ </span><br><span class="line">console.log(&apos;array1: &apos;, array1);</span><br><span class="line">// expected output: Array [&apos;three&apos;, &apos;two&apos;, &apos;one&apos;]</span><br></pre></td></tr></table></figure></li><li><p>sort() </p><ul><li>功能: 对字符数组或数字数组进行排序</li><li>特性 <ul><li>默认按字符串比较 </li><li>按数值较大比较虚函数支持升序<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function compare(value1, value2) &#123;</span><br><span class="line">    if (value1 &lt; value2) &#123;</span><br><span class="line">        return -1;</span><br><span class="line">    &#125; else if (value1 &gt; value2) &#123;</span><br><span class="line">        return 1;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return 0</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul></li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var months = [&apos;March&apos;, &apos;Jan&apos;, &apos;Feb&apos;, &apos;Dec&apos;];</span><br><span class="line">months.sort();</span><br><span class="line">console.log(months);</span><br><span class="line">// expected output: Array [&quot;Dec&quot;, &quot;Feb&quot;, &quot;Jan&quot;, &quot;March&quot;]</span><br><span class="line"></span><br><span class="line">var array1 = [1, 30, 4, 21, 100000];</span><br><span class="line">array1.sort();</span><br><span class="line">console.log(array1);</span><br><span class="line">// expected output: Array [1, 100000, 21, 30, 4]</span><br></pre></td></tr></table></figure></li></ul></li></ul><ul><li><p><strong>数组转换</strong></p><ul><li><p>toString(): 转换为字符串并返回</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var array1 = [1, 2, &apos;a&apos;, &apos;1a&apos;];</span><br><span class="line">console.log(array1.toString());</span><br><span class="line">// expected output: &quot;1,2,a,1a&quot;</span><br></pre></td></tr></table></figure></li><li><p>toLocaleString(): 转换为本地格式字符串并返回</p><blockquote><p>toLocaleString() 返回一个字符串表示数组中的元素。数组中的元素将使用各自的 toLocaleString 方法转成字符串，这些字符串将使用一个特定语言环境的字符串（例如一个逗号 “,”）隔开。</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var array1 = [1, &apos;a&apos;, new Date(&apos;21 Dec 1997 14:12:00 UTC&apos;)];</span><br><span class="line">var localeString = array1.toLocaleString(&apos;en&apos;, &#123;timeZone: &quot;UTC&quot;&#125;);</span><br><span class="line"></span><br><span class="line">console.log(localeString);</span><br><span class="line">// expected output: &quot;1,a,12/21/1997, 2:12:00 PM&quot;,</span><br><span class="line">// This assumes &quot;en&quot; locale and UTC timezone - your results may vary</span><br></pre></td></tr></table></figure></li><li><p>join(): 用指定分隔符分割数组并转换为字符串</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var elements = [&apos;Fire&apos;, &apos;Air&apos;, &apos;Water&apos;];</span><br><span class="line"></span><br><span class="line">console.log(elements.join());</span><br><span class="line">// expected output: &quot;Fire,Air,Water&quot;</span><br><span class="line"></span><br><span class="line">console.log(elements.join(&apos;&apos;));</span><br><span class="line">// expected output: &quot;FireAirWater&quot;</span><br><span class="line"></span><br><span class="line">console.log(elements.join(&apos;-&apos;));</span><br><span class="line">// expected output: &quot;Fire-Air-Water&quot;</span><br></pre></td></tr></table></figure></li></ul></li></ul><h4 id="ES5"><a href="#ES5" class="headerlink" title="ES5"></a>ES5</h4><ul><li><p>位置方法</p><ul><li><p><strong>lastIndexOf</strong>: 从数组的结束位置开始查找</p><blockquote><p>lastIndexOf() 方法返回指定元素（也即有效的 JavaScript 值或变量）在数组中的最后一个的索引，如果不存在则返回 -1。从数组的后面向前查找，从 fromIndex 处开始。</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var animals = [&apos;Dodo&apos;, &apos;Tiger&apos;, &apos;Penguin&apos;, &apos;Dodo&apos;];</span><br><span class="line"></span><br><span class="line">console.log(animals.lastIndexOf(&apos;Dodo&apos;));</span><br><span class="line">// expected output: 3</span><br><span class="line"></span><br><span class="line">console.log(animals.lastIndexOf(&apos;Tiger&apos;));</span><br><span class="line">// expected output: 1</span><br></pre></td></tr></table></figure></li><li><p><strong>indexOf</strong>: 从数组的起始位置开始查找 </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var animals = [&apos;Dodo&apos;, &apos;Tiger&apos;, &apos;Penguin&apos;, &apos;Dodo&apos;];</span><br><span class="line"></span><br><span class="line">console.log(animals.lastIndexOf(&apos;Dodo&apos;));</span><br><span class="line">// expected output: 3;</span><br><span class="line"></span><br><span class="line">console.log(animals.lastIndexOf(&apos;Tiger&apos;));</span><br><span class="line">// expected output: 1;</span><br></pre></td></tr></table></figure></li><li><p>参数: </p><ul><li>要查找的项</li><li>表示查找起点的位置索引</li></ul></li></ul></li><li><p>迭代方法</p><ul><li><p>every: 数组内的所有元素是否都能通过某个指定函数的测试。它返回一个布尔值。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function isBelowThreshold(currentValue) &#123;</span><br><span class="line">  return currentValue &lt; 40;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var array1 = [1, 30, 39, 29, 10, 13];</span><br><span class="line"></span><br><span class="line">console.log(array1.every(isBelowThreshold));</span><br><span class="line">// expected output: true</span><br><span class="line"></span><br><span class="line">var array2 = [1, 30, 39, 29, 10, 13, 50];</span><br><span class="line"></span><br><span class="line">console.log(array2.every(isBelowThreshold));</span><br><span class="line">// expected output: false</span><br></pre></td></tr></table></figure></li><li><p>filter: 创建一个新数组, 其包含通过所提供函数实现的测试的所有元素。 </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var words = [&apos;spray&apos;, &apos;limit&apos;, &apos;elite&apos;, &apos;exuberant&apos;, &apos;destruction&apos;, &apos;present&apos;];</span><br><span class="line"></span><br><span class="line">const result = words.filter(word =&gt; word.length &gt; 6);</span><br><span class="line"></span><br><span class="line">console.log(result);</span><br><span class="line">// expected output: Array [&quot;exuberant&quot;, &quot;destruction&quot;, &quot;present&quot;]</span><br></pre></td></tr></table></figure></li><li><p>forEach</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var array1 = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;];</span><br><span class="line"></span><br><span class="line">array1.forEach(function(element) &#123;</span><br><span class="line">  console.log(element);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// expected output: &quot;a&quot;</span><br><span class="line">// expected output: &quot;b&quot;</span><br><span class="line">// expected output: &quot;c&quot;</span><br></pre></td></tr></table></figure></li><li><p>map: 创建一个新数组，其结果是该数组中的每个元素都调用一个提供的函数后返回的结果。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var array1 = [1, 4, 9, 16];</span><br><span class="line"></span><br><span class="line">// pass a function to map</span><br><span class="line">const map1 = array1.map(x =&gt; x * 2);</span><br><span class="line"></span><br><span class="line">console.log(map1);</span><br><span class="line">// expected output: Array [2, 8, 18, 32]</span><br></pre></td></tr></table></figure></li><li><p>some: 测试是否至少有一个元素可以通过被提供的函数方法。该方法返回一个Boolean类型的值。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var array = [1, 2, 3, 4, 5];</span><br><span class="line"></span><br><span class="line">var even = function(element) &#123;</span><br><span class="line">  // checks whether an element is even</span><br><span class="line">  return element % 2 === 0;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">console.log(array.some(even));</span><br><span class="line">// expected output: true</span><br></pre></td></tr></table></figure></li></ul></li><li><p>缩小方法</p><ul><li><p>reduce: 从数组起始位开始遍历</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const array1 = [1, 2, 3, 4];</span><br><span class="line">const reducer = (accumulator, currentValue) =&gt; accumulator + currentValue;</span><br><span class="line"></span><br><span class="line">// 1 + 2 + 3 + 4</span><br><span class="line">console.log(array1.reduce(reducer));</span><br><span class="line">// expected output: 10</span><br><span class="line"></span><br><span class="line">// 5 + 1 + 2 + 3 + 4</span><br><span class="line">console.log(array1.reduce(reducer, 5));</span><br><span class="line">// expected output: 15</span><br></pre></td></tr></table></figure></li><li><p>reduceRight: 从数组末尾开始遍历,方法接受一个函数作为累加器（accumulator）和数组的每个值（从右到左）将其减少为单个值。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const array1 = [[0, 1], [2, 3], [4, 5]].reduceRight(</span><br><span class="line">  (accumulator, currentValue) =&gt; accumulator.concat(currentValue)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">console.log(array1);</span><br><span class="line">// expected output: Array [4, 5, 2, 3, 0, 1]</span><br></pre></td></tr></table></figure></li><li><p>DEMO: </p><ul><li><p>例子：求一个数组中所有值的和</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var total = [0, 1, 2, 3].reduceRight(function(a, b) &#123;</span><br><span class="line">    return a + b;</span><br><span class="line">&#125;);</span><br><span class="line">// total == 6</span><br></pre></td></tr></table></figure></li><li><p>例子：扁平化（flatten）一个元素为数组的数组</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var flattened = [[0, 1], [2, 3], [4, 5]].reduceRight(function(a, b) &#123;</span><br><span class="line">    return a.concat(b);</span><br><span class="line">&#125;, []);</span><br><span class="line">// flattened is [4, 5, 2, 3, 0, 1]</span><br></pre></td></tr></table></figure></li><li><p>例子：例子：reduce 与 reduceRight 之间的区别</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var a = [&apos;1&apos;, &apos;2&apos;, &apos;3&apos;, &apos;4&apos;, &apos;5&apos;]; </span><br><span class="line">var left  = a.reduce(function(prev, cur)      &#123; return prev + cur; &#125;); </span><br><span class="line">var right = a.reduceRight(function(prev, cur) &#123; return prev + cur; &#125;); </span><br><span class="line"></span><br><span class="line">console.log(left);  // &quot;12345&quot;</span><br><span class="line">console.log(right); // &quot;54321&quot;</span><br></pre></td></tr></table></figure></li></ul></li><li><p>回调函数</p><ul><li>当前一个值prev</li><li>当前值cur</li><li>项的索引 index</li><li>数组对象 array</li></ul></li></ul></li></ul>]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>JavaScript数组</title>
+    <url>/2019/07/10/javascript_array/</url>
+    <content><![CDATA[<h4 id="创建方法"><a href="#创建方法" class="headerlink" title="创建方法"></a>创建方法</h4><ul>
+<li>空数组: var Obj = new Array()</li>
+<li>指定长度数组: var Obj = new Array(Size)</li>
+<li>置顶元素数组: var Obj = new Array(元素1, 元素2, 元素3, …, 元素N)</li>
+<li>单维数组: var Obj = new Array(元素1, 元素2, 元素3, …, 元素N)</li>
+<li>多维数组: var Obj = new Array([数组序列1], [数组序列2], [数组序列N])</li>
+</ul>
+<a id="more"></a>
+<h4 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h4><ul>
+<li>存取数组元素<ul>
+<li>单维数组: 数组名[下标]</li>
+<li>多维数组: 数组名[外层数组下标][内层数组下标]</li>
+<li>特性<ul>
+<li>数组长度是弹性的,可自由伸缩</li>
+<li>数组下表从0开始</li>
+<li>下标类型<ul>
+<li>数值</li>
+<li>非数值<ul>
+<li>转为字符串</li>
+<li>生成关联数组</li>
+<li>下标作为对象属性的名字</li>
+</ul>
+</li>
+<li>数组元素可添加到对象中</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>增加数组: 使用[]运算符指定一个新下标</li>
+<li>删除数组: delete数组名[下标]</li>
+<li>遍历数组: for(var 元素变量 in 数组)</li>
+</ul>
+<h4 id="数组属性"><a href="#数组属性" class="headerlink" title="数组属性"></a>数组属性</h4><ul>
+<li>constructor: 引用数组对象的构造函数;</li>
+<li>length: 返回数组的长度;</li>
+<li>prototype: 通过增加属性和方法扩展数组定义;</li>
+</ul>
+<h4 id="ES3"><a href="#ES3" class="headerlink" title="ES3"></a>ES3</h4><ul>
+<li><p><strong>添加</strong></p>
+<ul>
+<li><p><strong>push()</strong>: 在数组末尾添加数组</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var animals = [&apos;pigs&apos;, &apos;goats&apos;, &apos;sheep&apos;];</span><br><span class="line"></span><br><span class="line">console.log(animals.push(&apos;cows&apos;));</span><br><span class="line">// expected output: 4</span><br><span class="line"></span><br><span class="line">console.log(animals);</span><br><span class="line">// expected output: Array [&quot;pigs&quot;, &quot;goats&quot;, &quot;sheep&quot;, &quot;cows&quot;]</span><br><span class="line"></span><br><span class="line">animals.push(&apos;chickens&apos;);</span><br><span class="line"></span><br><span class="line">console.log(animals);</span><br><span class="line">// expected output: Array [&quot;pigs&quot;, &quot;goats&quot;, &quot;sheep&quot;, &quot;cows&quot;, &quot;chickens&quot;]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>unshift()</strong>: 在数组头部添加元素</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var array1 = [1, 2, 3];</span><br><span class="line">    </span><br><span class="line">console.log(array1.unshift(4, 5));</span><br><span class="line">// expected output: 5</span><br><span class="line"></span><br><span class="line">console.log(array1);</span><br><span class="line">// expected output: Array [4, 5, 1, 2, 3]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>concat()</strong>: 合并两个数组</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var array1 = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;];</span><br><span class="line">var array2 = [&apos;d&apos;, &apos;e&apos;, &apos;f&apos;];</span><br><span class="line"></span><br><span class="line">console.log(array1.concat(array2));</span><br><span class="line">// expected output: Array [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>删除</strong></p>
+<ul>
+<li><p><strong>pop()</strong>: 删除并返回数值的最后一个元素;</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var plants = [&apos;broccoli&apos;, &apos;cauliflower&apos;, &apos;cabbage&apos;, &apos;kale&apos;, &apos;tomato&apos;];</span><br><span class="line">    </span><br><span class="line">console.log(plants.pop());</span><br><span class="line">// expected output: &quot;tomato&quot;</span><br><span class="line"></span><br><span class="line">console.log(plants);</span><br><span class="line">// expected output: Array [&quot;broccoli&quot;, &quot;cauliflower&quot;, &quot;cabbage&quot;, &quot;kale&quot;]</span><br><span class="line"></span><br><span class="line">plants.pop();</span><br><span class="line"></span><br><span class="line">console.log(plants);</span><br><span class="line">// expected output: Array [&quot;broccoli&quot;, &quot;cauliflower&quot;, &quot;cabbage&quot;]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>shift()</strong>: 删除并返回数值的最后一个元素;</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var array1 = [1, 2, 3];</span><br><span class="line"></span><br><span class="line">var firstElement = array1.shift();</span><br><span class="line"></span><br><span class="line">console.log(array1);</span><br><span class="line">// expected output: Array [2, 3]</span><br><span class="line"></span><br><span class="line">console.log(firstElement);</span><br><span class="line">// expected output: 1</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>子数组</strong></p>
+<ul>
+<li><p><strong>splice()</strong></p>
+<ul>
+<li><p>删除任意数量的项</p>
+<ul>
+<li>要删除的其实下标</li>
+<li>要删除的项数<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var months = [&apos;Jan&apos;, &apos;March&apos;, &apos;April&apos;, &apos;June&apos;];</span><br><span class="line">months.splice(0, 1)</span><br><span class="line">// expected output: Array [&apos;March&apos;, &apos;April&apos;, &apos;June&apos;]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>在指定位置插入指定的项</p>
+<ul>
+<li>起始下标</li>
+<li>0(不删除任何项)</li>
+<li>要插入的项<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var months = [&apos;Jan&apos;, &apos;March&apos;, &apos;April&apos;, &apos;June&apos;];</span><br><span class="line">months.splice(1, 0, &apos;Feb&apos;);</span><br><span class="line">// inserts at index 1</span><br><span class="line">console.log(months);</span><br><span class="line">// expected output: Array [&apos;Jan&apos;, &apos;Feb&apos;, &apos;March&apos;, &apos;April&apos;, &apos;June&apos;]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>替换任意数量的项</p>
+<ul>
+<li>起始下标</li>
+<li>要删除的项数</li>
+<li>要插入的项<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var months = [&apos;Jan&apos;, &apos;March&apos;, &apos;April&apos;, &apos;June&apos;];</span><br><span class="line">months.splice(4, 1, &apos;May&apos;);</span><br><span class="line">// replaces 1 element at index 4</span><br><span class="line">console.log(months);</span><br><span class="line">// expected output: Array [&apos;Jan&apos;, &apos;Feb&apos;, &apos;April&apos;, &apos;May&apos;]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>slice()</strong></p>
+<ul>
+<li>功能: 从已有数组中选取部分元素构成新数组</li>
+<li>参数<ul>
+<li>返回项的起始位置</li>
+<li>返回项的结束位置</li>
+</ul>
+</li>
+<li>特征<ul>
+<li>如果是负数,则用数组长度加上该值得确定位置</li>
+<li>起始位置为数组实际下标</li>
+<li>结束位置的实际下标为结束数值减1<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var animals = [&apos;ant&apos;, &apos;bison&apos;, &apos;camel&apos;, &apos;duck&apos;, &apos;elephant&apos;];</span><br><span class="line"></span><br><span class="line">console.log(animals.slice(2));</span><br><span class="line">// expected output: Array [&quot;camel&quot;, &quot;duck&quot;, &quot;elephant&quot;]</span><br><span class="line"></span><br><span class="line">console.log(animals.slice(2, 4));</span><br><span class="line">// expected output: Array [&quot;camel&quot;, &quot;duck&quot;]</span><br><span class="line"></span><br><span class="line">console.log(animals.slice(1, 5));</span><br><span class="line">// expected output: Array [&quot;bison&quot;, &quot;camel&quot;, &quot;duck&quot;, &quot;elephant&quot;]</span><br><span class="line"></span><br><span class="line">console.log(animals.slice(-1));</span><br><span class="line">// expected output: Array [&quot;elephant&quot;]</span><br><span class="line"></span><br><span class="line">console.log(animals.slice(-2));</span><br><span class="line">// expected output: Array [&quot;duck&quot;, &quot;elephant&quot;]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>&gt; 注: slice() 方法返回一个新的数组对象，这一对象是一个由 begin和 end（不包括end）决定的原数组的浅拷贝。原始数组不会被改变。
+</code></pre><ul>
+<li><p><strong>数组排序</strong></p>
+<ul>
+<li><p>reverse(): 颠倒数组中元素的顺序</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var array1 = [&apos;one&apos;, &apos;two&apos;, &apos;three&apos;];</span><br><span class="line">console.log(&apos;array1: &apos;, array1);</span><br><span class="line">// expected output: Array [&apos;one&apos;, &apos;two&apos;, &apos;three&apos;]</span><br><span class="line"></span><br><span class="line">var reversed = array1.reverse(); </span><br><span class="line">console.log(&apos;reversed: &apos;, reversed);</span><br><span class="line">// expected output: Array [&apos;three&apos;, &apos;two&apos;, &apos;one&apos;]</span><br><span class="line"></span><br><span class="line">/* Careful: reverse is destructive. It also changes</span><br><span class="line">the original array */ </span><br><span class="line">console.log(&apos;array1: &apos;, array1);</span><br><span class="line">// expected output: Array [&apos;three&apos;, &apos;two&apos;, &apos;one&apos;]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>sort() </p>
+<ul>
+<li>功能: 对字符数组或数字数组进行排序</li>
+<li>特性 <ul>
+<li>默认按字符串比较 </li>
+<li>按数值较大比较虚函数支持升序<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function compare(value1, value2) &#123;</span><br><span class="line">    if (value1 &lt; value2) &#123;</span><br><span class="line">        return -1;</span><br><span class="line">    &#125; else if (value1 &gt; value2) &#123;</span><br><span class="line">        return 1;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return 0</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var months = [&apos;March&apos;, &apos;Jan&apos;, &apos;Feb&apos;, &apos;Dec&apos;];</span><br><span class="line">months.sort();</span><br><span class="line">console.log(months);</span><br><span class="line">// expected output: Array [&quot;Dec&quot;, &quot;Feb&quot;, &quot;Jan&quot;, &quot;March&quot;]</span><br><span class="line"></span><br><span class="line">var array1 = [1, 30, 4, 21, 100000];</span><br><span class="line">array1.sort();</span><br><span class="line">console.log(array1);</span><br><span class="line">// expected output: Array [1, 100000, 21, 30, 4]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p><strong>数组转换</strong></p>
+<ul>
+<li><p>toString(): 转换为字符串并返回</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var array1 = [1, 2, &apos;a&apos;, &apos;1a&apos;];</span><br><span class="line">console.log(array1.toString());</span><br><span class="line">// expected output: &quot;1,2,a,1a&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>toLocaleString(): 转换为本地格式字符串并返回</p>
+<blockquote>
+<p>toLocaleString() 返回一个字符串表示数组中的元素。数组中的元素将使用各自的 toLocaleString 方法转成字符串，这些字符串将使用一个特定语言环境的字符串（例如一个逗号 “,”）隔开。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var array1 = [1, &apos;a&apos;, new Date(&apos;21 Dec 1997 14:12:00 UTC&apos;)];</span><br><span class="line">var localeString = array1.toLocaleString(&apos;en&apos;, &#123;timeZone: &quot;UTC&quot;&#125;);</span><br><span class="line"></span><br><span class="line">console.log(localeString);</span><br><span class="line">// expected output: &quot;1,a,12/21/1997, 2:12:00 PM&quot;,</span><br><span class="line">// This assumes &quot;en&quot; locale and UTC timezone - your results may vary</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>join(): 用指定分隔符分割数组并转换为字符串</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var elements = [&apos;Fire&apos;, &apos;Air&apos;, &apos;Water&apos;];</span><br><span class="line"></span><br><span class="line">console.log(elements.join());</span><br><span class="line">// expected output: &quot;Fire,Air,Water&quot;</span><br><span class="line"></span><br><span class="line">console.log(elements.join(&apos;&apos;));</span><br><span class="line">// expected output: &quot;FireAirWater&quot;</span><br><span class="line"></span><br><span class="line">console.log(elements.join(&apos;-&apos;));</span><br><span class="line">// expected output: &quot;Fire-Air-Water&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="ES5"><a href="#ES5" class="headerlink" title="ES5"></a>ES5</h4><ul>
+<li><p>位置方法</p>
+<ul>
+<li><p><strong>lastIndexOf</strong>: 从数组的结束位置开始查找</p>
+<blockquote>
+<p>lastIndexOf() 方法返回指定元素（也即有效的 JavaScript 值或变量）在数组中的最后一个的索引，如果不存在则返回 -1。从数组的后面向前查找，从 fromIndex 处开始。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var animals = [&apos;Dodo&apos;, &apos;Tiger&apos;, &apos;Penguin&apos;, &apos;Dodo&apos;];</span><br><span class="line"></span><br><span class="line">console.log(animals.lastIndexOf(&apos;Dodo&apos;));</span><br><span class="line">// expected output: 3</span><br><span class="line"></span><br><span class="line">console.log(animals.lastIndexOf(&apos;Tiger&apos;));</span><br><span class="line">// expected output: 1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>indexOf</strong>: 从数组的起始位置开始查找 </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var animals = [&apos;Dodo&apos;, &apos;Tiger&apos;, &apos;Penguin&apos;, &apos;Dodo&apos;];</span><br><span class="line"></span><br><span class="line">console.log(animals.lastIndexOf(&apos;Dodo&apos;));</span><br><span class="line">// expected output: 3;</span><br><span class="line"></span><br><span class="line">console.log(animals.lastIndexOf(&apos;Tiger&apos;));</span><br><span class="line">// expected output: 1;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>参数: </p>
+<ul>
+<li>要查找的项</li>
+<li>表示查找起点的位置索引</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>迭代方法</p>
+<ul>
+<li><p>every: 数组内的所有元素是否都能通过某个指定函数的测试。它返回一个布尔值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function isBelowThreshold(currentValue) &#123;</span><br><span class="line">  return currentValue &lt; 40;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var array1 = [1, 30, 39, 29, 10, 13];</span><br><span class="line"></span><br><span class="line">console.log(array1.every(isBelowThreshold));</span><br><span class="line">// expected output: true</span><br><span class="line"></span><br><span class="line">var array2 = [1, 30, 39, 29, 10, 13, 50];</span><br><span class="line"></span><br><span class="line">console.log(array2.every(isBelowThreshold));</span><br><span class="line">// expected output: false</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>filter: 创建一个新数组, 其包含通过所提供函数实现的测试的所有元素。 </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var words = [&apos;spray&apos;, &apos;limit&apos;, &apos;elite&apos;, &apos;exuberant&apos;, &apos;destruction&apos;, &apos;present&apos;];</span><br><span class="line"></span><br><span class="line">const result = words.filter(word =&gt; word.length &gt; 6);</span><br><span class="line"></span><br><span class="line">console.log(result);</span><br><span class="line">// expected output: Array [&quot;exuberant&quot;, &quot;destruction&quot;, &quot;present&quot;]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>forEach</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var array1 = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;];</span><br><span class="line"></span><br><span class="line">array1.forEach(function(element) &#123;</span><br><span class="line">  console.log(element);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// expected output: &quot;a&quot;</span><br><span class="line">// expected output: &quot;b&quot;</span><br><span class="line">// expected output: &quot;c&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>map: 创建一个新数组，其结果是该数组中的每个元素都调用一个提供的函数后返回的结果。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var array1 = [1, 4, 9, 16];</span><br><span class="line"></span><br><span class="line">// pass a function to map</span><br><span class="line">const map1 = array1.map(x =&gt; x * 2);</span><br><span class="line"></span><br><span class="line">console.log(map1);</span><br><span class="line">// expected output: Array [2, 8, 18, 32]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>some: 测试是否至少有一个元素可以通过被提供的函数方法。该方法返回一个Boolean类型的值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var array = [1, 2, 3, 4, 5];</span><br><span class="line"></span><br><span class="line">var even = function(element) &#123;</span><br><span class="line">  // checks whether an element is even</span><br><span class="line">  return element % 2 === 0;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">console.log(array.some(even));</span><br><span class="line">// expected output: true</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>缩小方法</p>
+<ul>
+<li><p>reduce: 从数组起始位开始遍历</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const array1 = [1, 2, 3, 4];</span><br><span class="line">const reducer = (accumulator, currentValue) =&gt; accumulator + currentValue;</span><br><span class="line"></span><br><span class="line">// 1 + 2 + 3 + 4</span><br><span class="line">console.log(array1.reduce(reducer));</span><br><span class="line">// expected output: 10</span><br><span class="line"></span><br><span class="line">// 5 + 1 + 2 + 3 + 4</span><br><span class="line">console.log(array1.reduce(reducer, 5));</span><br><span class="line">// expected output: 15</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>reduceRight: 从数组末尾开始遍历,方法接受一个函数作为累加器（accumulator）和数组的每个值（从右到左）将其减少为单个值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const array1 = [[0, 1], [2, 3], [4, 5]].reduceRight(</span><br><span class="line">  (accumulator, currentValue) =&gt; accumulator.concat(currentValue)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">console.log(array1);</span><br><span class="line">// expected output: Array [4, 5, 2, 3, 0, 1]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>DEMO: </p>
+<ul>
+<li><p>例子：求一个数组中所有值的和</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var total = [0, 1, 2, 3].reduceRight(function(a, b) &#123;</span><br><span class="line">    return a + b;</span><br><span class="line">&#125;);</span><br><span class="line">// total == 6</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>例子：扁平化（flatten）一个元素为数组的数组</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var flattened = [[0, 1], [2, 3], [4, 5]].reduceRight(function(a, b) &#123;</span><br><span class="line">    return a.concat(b);</span><br><span class="line">&#125;, []);</span><br><span class="line">// flattened is [4, 5, 2, 3, 0, 1]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>例子：例子：reduce 与 reduceRight 之间的区别</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var a = [&apos;1&apos;, &apos;2&apos;, &apos;3&apos;, &apos;4&apos;, &apos;5&apos;]; </span><br><span class="line">var left  = a.reduce(function(prev, cur)      &#123; return prev + cur; &#125;); </span><br><span class="line">var right = a.reduceRight(function(prev, cur) &#123; return prev + cur; &#125;); </span><br><span class="line"></span><br><span class="line">console.log(left);  // &quot;12345&quot;</span><br><span class="line">console.log(right); // &quot;54321&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>回调函数</p>
+<ul>
+<li>当前一个值prev</li>
+<li>当前值cur</li>
+<li>项的索引 index</li>
+<li>数组对象 array</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
       <categories>
-          
-          <category> JavaScript </category>
-          
-          <category> JavaScript知识 </category>
-          
+        <category>JavaScript</category>
+        <category>JavaScript知识</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>JavaScript变量</title>
-      <link href="/2019/07/05/javascript_variable/"/>
-      <url>/2019/07/05/javascript_variable/</url>
-      
-        <content type="html"><![CDATA[<ol><li>值类型</li></ol><blockquote><p>值类型(基本类型)：数值(number)、布尔值(boolean)、null、undefined、string(在赋值传递中会以引用类型的方式来处理)</p></blockquote><ul><li>占用空间固定,保存在站中.</li><li>保存于复制是值本身.</li><li>使用typeof检测数据类型</li><li>基本数据类型是值类型</li></ul><a id="more"></a><ol start="2"><li>引用类型</li></ol><blockquote><p>引用类型：对象、数组、函数。</p></blockquote><ul><li>占用空间不固定,保存在堆中.</li><li>保存与复制的是指向对象的一个指针.</li><li>使用instanceof检测数据的类型.</li><li>使用new()发方法构造出的对象是引用型.</li></ul><h4 id="堆与栈"><a href="#堆与栈" class="headerlink" title="堆与栈"></a>堆与栈</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">栈[栈]--&gt;|引用|堆[堆]</span><br></pre></td></tr></table></figure><blockquote><p>举个栗子</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var a1 = 0;   // 栈 </span><br><span class="line">var a2 = &apos;this is string&apos;; // 栈</span><br><span class="line">var a3 = null; // 栈</span><br><span class="line"></span><br><span class="line">var b = &#123; m: 20 &#125;; // 变量b存在于栈中，&#123;m: 20&#125; 作为对象存在于堆内存中</span><br><span class="line">var c = [1, 2, 3]; // 变量c存在于栈中，[1, 2, 3] 作为对象存在于堆内存中</span><br></pre></td></tr></table></figure><h4 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h4><ol><li>全局变量</li></ol><ul><li>在函数体外定义的变量.</li><li>在函数体内部定义的无var声明的变量.</li></ul><ol start="2"><li>局部变量</li></ol><ul><li>在函数内部使用var声明的变量</li><li>函数的参数变量</li></ul><ol start="3"><li>优先级</li></ol><ul><li>局部变量高于同名的全局变量</li><li>参数变量高于全名全局变量</li><li>局部变量高于同名的参数变量</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 例:</span><br><span class="line">var a = 1;</span><br><span class="line">function Fn(i) &#123;</span><br><span class="line">var i = 1</span><br><span class="line">    var a = 2;</span><br><span class="line">    console.log(a) // 2</span><br><span class="line">console.log(i) // 1</span><br><span class="line">&#125;</span><br><span class="line">Fn(2)</span><br></pre></td></tr></table></figure><ol start="4"><li>特性</li></ol><ul><li>忽略块级作用域.</li><li>全局变量是全局对象的属性.</li><li>局部变量是调用对象的属性.</li><li>作用域链.<ul><li>内层函数可访问外层函数局部变量.</li><li>外层函数不能访问内层函数局部变量.</li></ul></li><li>生命周期<ul><li>全局变量: 除非被显示删除,否则一直存在.</li><li>局部变量: 自声明起值函数运行完毕或被显示删除.</li><li>回收机制<ul><li>标记清除.</li><li>引用计数.</li></ul></li></ul></li></ul>]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>JavaScript变量</title>
+    <url>/2019/07/05/javascript_variable/</url>
+    <content><![CDATA[<ol>
+<li>值类型</li>
+</ol>
+<blockquote>
+<p>值类型(基本类型)：数值(number)、布尔值(boolean)、null、undefined、string(在赋值传递中会以引用类型的方式来处理)</p>
+</blockquote>
+<ul>
+<li>占用空间固定,保存在站中.</li>
+<li>保存于复制是值本身.</li>
+<li>使用typeof检测数据类型</li>
+<li>基本数据类型是值类型</li>
+</ul>
+<a id="more"></a>
+<ol start="2">
+<li>引用类型</li>
+</ol>
+<blockquote>
+<p>引用类型：对象、数组、函数。</p>
+</blockquote>
+<ul>
+<li>占用空间不固定,保存在堆中.</li>
+<li>保存与复制的是指向对象的一个指针.</li>
+<li>使用instanceof检测数据的类型.</li>
+<li>使用new()发方法构造出的对象是引用型.</li>
+</ul>
+<h4 id="堆与栈"><a href="#堆与栈" class="headerlink" title="堆与栈"></a>堆与栈</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">graph LR</span><br><span class="line">栈[栈]--&gt;|引用|堆[堆]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>举个栗子</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var a1 = 0;   // 栈 </span><br><span class="line">var a2 = &apos;this is string&apos;; // 栈</span><br><span class="line">var a3 = null; // 栈</span><br><span class="line"></span><br><span class="line">var b = &#123; m: 20 &#125;; // 变量b存在于栈中，&#123;m: 20&#125; 作为对象存在于堆内存中</span><br><span class="line">var c = [1, 2, 3]; // 变量c存在于栈中，[1, 2, 3] 作为对象存在于堆内存中</span><br></pre></td></tr></table></figure>
+<h4 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h4><ol>
+<li>全局变量</li>
+</ol>
+<ul>
+<li>在函数体外定义的变量.</li>
+<li>在函数体内部定义的无var声明的变量.</li>
+</ul>
+<ol start="2">
+<li>局部变量</li>
+</ol>
+<ul>
+<li>在函数内部使用var声明的变量</li>
+<li>函数的参数变量</li>
+</ul>
+<ol start="3">
+<li>优先级</li>
+</ol>
+<ul>
+<li>局部变量高于同名的全局变量</li>
+<li>参数变量高于全名全局变量</li>
+<li>局部变量高于同名的参数变量</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// 例:</span><br><span class="line">var a = 1;</span><br><span class="line">function Fn(i) &#123;</span><br><span class="line">	var i = 1</span><br><span class="line">    var a = 2;</span><br><span class="line">    console.log(a) // 2</span><br><span class="line">	console.log(i) // 1</span><br><span class="line">&#125;</span><br><span class="line">Fn(2)</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>特性</li>
+</ol>
+<ul>
+<li>忽略块级作用域.</li>
+<li>全局变量是全局对象的属性.</li>
+<li>局部变量是调用对象的属性.</li>
+<li>作用域链.<ul>
+<li>内层函数可访问外层函数局部变量.</li>
+<li>外层函数不能访问内层函数局部变量.</li>
+</ul>
+</li>
+<li>生命周期<ul>
+<li>全局变量: 除非被显示删除,否则一直存在.</li>
+<li>局部变量: 自声明起值函数运行完毕或被显示删除.</li>
+<li>回收机制<ul>
+<li>标记清除.</li>
+<li>引用计数.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
       <categories>
-          
-          <category> JavaScript </category>
-          
-          <category> JavaScript知识 </category>
-          
+        <category>JavaScript</category>
+        <category>JavaScript知识</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-  
-  
+  </entry>
 </search>
